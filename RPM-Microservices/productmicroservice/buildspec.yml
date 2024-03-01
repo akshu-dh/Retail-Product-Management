@@ -1,0 +1,26 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      java: corretto11
+      docker: 18
+  pre_build:
+    commands:
+    - echo "Pre_build"
+    - echo "Logging in to Amazon ECR"
+    - $(aws ecr get-login  --no-include-email --region $AWS_REGION)
+  build:
+    commands:
+    - echo Build phase started
+    - cd Eureka_Server
+    - mvn clean install
+    - echo Building docker image---
+    - docker build -t abhi-eurekaserver-repo/productmicroservice .
+    - docker tag abhi-eurekaserver-repo/productmicroservice 222512976514.dkr.ecr.us-west-1.amazonaws.com/abhi-eurekaserver-repo:productmicroservice
+  post_build:
+    commands:
+    - echo "Post_build"
+    - docker push 222512976514.dkr.ecr.us-west-1.amazonaws.com/abhi-eurekaserver-repo:productmicroservice
+    - printf '[{"name":"productmicroservice-container","imageUri":"%s"}]' $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/abhi-eurekaserver-repo:productmicroservice > taskdefinition.json
+artifacts:
+  files: productmicroservice/taskdefinition.json

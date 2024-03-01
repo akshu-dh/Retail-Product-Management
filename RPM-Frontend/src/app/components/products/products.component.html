@@ -1,0 +1,153 @@
+<!-- Header -->
+<app-header></app-header>
+
+<!-- Products -->
+<div class="container mt-5">
+
+
+  <div class="row">
+    <div class="col-lg-4 mb-4" *ngFor="let product of products">
+
+      <div class="card" *ngIf="errorMs[0] !== product.id; else elsepart">
+        <img src={{product.imageName}} class="card-img-top product-card" alt="...">
+        <div class="card-body">
+          <a routerLink="/search/{{product.name}}">
+            <h5 class="card-title">{{product.name}} <span class="badge badge-success">{{product.rating | number :
+                '1.1-1'}}
+                <i class="fas fa-star"></i></span></h5>
+            <!-- <p class="card-text">{{product.description}}</p> -->
+            <p class="card-text font-weight-bold">₹{{product.price}}</p>
+          </a>
+
+          <button type="button" class="btn btn-warning mr-4 mt-3" data-toggle="modal"
+            attr.data-target="#wishmodel{{product.id}}">
+            Add To Wishlist
+          </button>
+
+          <div class="modal fade" id="wishmodel{{product.id}}">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Add to wishlist</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="modal-body">
+                  <form #wishForm="ngForm" (submit)="wishData(wishForm.value)" ngNativeValidate>
+                    <input hidden type="text" name="productId" class="form-control" [(ngModel)]="product.id" required>
+                    <div class="form-group">
+                      <label for="quantity">Quantity</label>
+                      <input type="number" name="quantity" class="form-control" ngModel="1" required>
+                    </div>
+
+
+                    <button type="submit" class="btn btn-lg btn-block btn-warning">Add To wishlist</button>
+
+                  </form>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+
+
+          <button type="button" class="btn btn-success mt-3" data-toggle="modal"
+            attr.data-target="#cartmodel{{product.id}}">
+            Add To Cart
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="cartmodel{{product.id}}">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Add to cart</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="modal-body">
+                  <form #basicForm="ngForm" (submit)="getData(basicForm.value)" ngNativeValidate>
+                    <input hidden type="text" name="productId" class="form-control" [(ngModel)]="product.id" required>
+                    <div class="form-group">
+                      <label for="quantity">Quantity</label>
+                      <input type="number" name="quantity" class="form-control" ngModel="1" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="zip">Zip Code</label>
+                      <input type="number" ngModel name="zipcode" class="form-control" id="zip" minlength="4" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-lg btn-block btn-primary">Add To Cart</button>
+
+                  </form>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <ng-template #elsepart>
+
+        <div class="card" *ngIf="errorMs[0] == product.id;">
+          <img src={{product.imageName}} class=" card-img-top product-card" alt="...">
+          <div class="card-body">
+            <a routerLink="/search/{{product.name}}">
+              <h5 class="card-title">{{product.name}} <span class="badge badge-success">{{product.rating | number :
+                  '1.1-1'}}
+                  <i class="fas fa-star"></i></span></h5>
+
+              <p class="card-text font-weight-bold">₹{{product.price}}</p>
+
+              <h6 class="text-danger">Out of stock</h6>
+            </a>
+            <button type="button" class="btn btn-warning mr-4 mt-3" data-toggle="modal"
+              attr.data-target="#wishmodel{{product.id}}">
+              Add To Wishlist
+            </button>
+
+            <div class="modal fade" id="wishmodel{{product.id}}">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add to wishlist</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+
+                  <div class="modal-body">
+                    <form #wishForm="ngForm" (submit)="wishData(wishForm.value)" ngNativeValidate>
+                      <input hidden type="text" name="productId" class="form-control" [(ngModel)]="product.id" required>
+                      <div class="form-group">
+                        <label for="quantity">Quantity</label>
+                        <input type="number" name="quantity" class="form-control" ngModel="1" required>
+                      </div>
+
+
+                      <button type="submit" class="btn btn-lg btn-block btn-warning">Add To wishlist</button>
+
+                    </form>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+
+
+</div>

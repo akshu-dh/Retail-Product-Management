@@ -1,0 +1,14 @@
+com\cognizant\apigatewayauthenication\entity\JwtResponse.class
+com\cognizant\apigatewayauthenication\service\JwtUserDetailsService.class
+com\cognizant\apigatewayauthenication\controller\FallbackController.class
+com\cognizant\apigatewayauthenication\config\WebSecurityConfig.class
+com\cognizant\apigatewayauthenication\config\JwtTokenUtil.class
+com\cognizant\apigatewayauthenication\config\JwtRequestFilter.class
+com\cognizant\apigatewayauthenication\entity\User.class
+com\cognizant\apigatewayauthenication\config\JwtAuthenticationEntryPoint.class
+com\cognizant\apigatewayauthenication\repository\UserRepository.class
+com\cognizant\apigatewayauthenication\entity\JwtRequest.class
+com\cognizant\apigatewayauthenication\APIGatewayAuthenticationApplication.class
+com\cognizant\apigatewayauthenication\SimpleCORSFilter.class
+com\cognizant\apigatewayauthenication\controller\JwtAuthenticationController.class
+com\cognizant\apigatewayauthenication\config\SwaggerConfig.class

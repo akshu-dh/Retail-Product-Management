@@ -1,0 +1,29 @@
+
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      java: corretto11
+      docker: 18
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login  --no-include-email --region $AWS_REGION)
+  build:
+    commands:
+      - echo "Entered build phase"
+      - cd book-service
+      - mvn compile
+      - mvn package
+      - echo " building docker image"
+      - docker build -t abhishek-service-repository:booksapp .
+      - docker tag abhishek-service-repository:booksapp 222512976514.dkr.ecr.us-west-1.amazonaws.com/abhishek-service-repository:booksapp
+  post_build:
+    commands:
+    - echo "Entered the post-build phase"
+    - docker push 222512976514.dkr.ecr.us-west-1.amazonaws.com/abhishek-service-repository:booksapp
+   
+    - printf '[{"name":"booksapp-container","imageUri":"%s"}]' $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/abhishek-service-repository:booksapp > taskdefination.json
+artifacts:
+  files:
+    - book-service/taskdefination.json
